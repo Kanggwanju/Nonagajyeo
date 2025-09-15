@@ -1,20 +1,32 @@
 # 카카오 SSO API 명세서
 
-## 개요
+-----
+
+## 문서 정보
+
+- **문서명**: 카카오 SSO API 명세서
+- **버전**: v1.0.2
+- **작성일**: 2025.09.11
+- **작성자**: 강관주
+- **최종 수정일**: 2025.09.15
+
+-----
+
+## 1\. 개요
 
 이 문서는 Spring Boot 기반 백엔드 애플리케이션의 카카오 소셜 로그인(SSO) API 명세서입니다. HTTP-Only 쿠키 기반 JWT 토큰 인증 방식을 사용하여 보안성을 강화했습니다.
 
 **Base URL**: `http://localhost:9000`
 **Frontend URL**: `http://localhost:5173`
 
-## 인증 방식
+## 2\. 인증 방식
 
 - **토큰 타입**: JWT (JSON Web Token)
 - **저장 방식**: HTTP-Only 쿠키
 - **Access Token 만료시간**: 15분 (900초)
 - **Refresh Token 만료시간**: 7일 (604,800초)
 
-## API 엔드포인트
+## 3\. API 엔드포인트
 
 ### 1. 카카오 로그인 시작
 
@@ -39,9 +51,9 @@ GET /login/oauth2/code/kakao
 ```
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| code | string | 카카오에서 제공하는 인증 코드 |
+| Name  | Type   | Description       |
+|-------|--------|-------------------|
+| code  | string | 카카오에서 제공하는 인증 코드  |
 | state | string | CSRF 방지용 상태값 (선택) |
 
 #### Success Response
@@ -53,7 +65,7 @@ GET /login/oauth2/code/kakao
 
 #### Error Response
 - **HTTP Status**: `302 Found`
-- **Location**: `http://localhost:5173/login?from=oauth2&error=<error_message>`
+- **Location**: `http://localhost:5173?from=oauth2&error=<error_message>`
 
 ---
 
@@ -147,18 +159,19 @@ Cookie: ACCESS_TOKEN=<access_token>
 ### Access Token
 ```json
 {
-  "sub": "123456789",
-  "iat": 1726401045,
-  "exp": 1726401945
+  
+  "sub": "123456789",  // 카카오 사용자 ID
+  "iat": 1726401045,   // 토큰 발급 시간
+  "exp": 1726401945    // 토큰 만료 시간 (15분 후)
 }
 ```
 
 ### Refresh Token
 ```json
 {
-  "sub": "123456789", 
-  "iat": 1726401045,
-  "exp": 1727005845
+  "sub": "123456789",  // 카카오 사용자 ID 
+  "iat": 1726401045,   // 토큰 발급 시간
+  "exp": 1727005845    // 토큰 만료 시간 (7일 후)
 }
 ```
 
@@ -175,33 +188,6 @@ Cookie: ACCESS_TOKEN=<access_token>
 }
 ```
 
-### 유효성 검증 에러
-```json
-{
-  "timestamp": "2025-09-15T10:30:45",
-  "status": 400,
-  "error": "VALIDATION_ERROR",
-  "validationErrors": [
-    {
-      "field": "nickname",
-      "message": "닉네임은 필수입니다.",
-      "rejectedValue": null
-    }
-  ]
-}
-```
-
-## 주요 에러 코드
-
-| HTTP Status | Error Code | Description |
-|-------------|------------|-------------|
-| 400 | INVALID_INPUT | 입력값이 올바르지 않습니다 |
-| 401 | UNAUTHORIZED | 인증이 필요합니다 |
-| 403 | FORBIDDEN | 접근 권한이 없습니다 |
-| 404 | RESOURCE_NOT_FOUND | 요청한 리소스를 찾을 수 없습니다 |
-| 404 | USER_NOT_FOUND | 사용자를 찾을 수 없습니다 |
-| 409 | DUPLICATE_RESOURCE | 이미 존재하는 리소스입니다 |
-| 500 | INTERNAL_SERVER_ERROR | 서버 내부 오류가 발생했습니다 |
 
 ## 보안 고려사항
 
