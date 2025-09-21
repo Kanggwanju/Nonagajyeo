@@ -1,5 +1,7 @@
 # 🛠️ 트러블슈팅: OAuth2 Success Handler에서 JWT subject로 `providerId`를 사용한 문제
+- 2025년 9월 16일
 
+---
 ## 📌 상황
 
 OAuth2 인증이 성공하면 `OAuth2SuccessHandler`에서 JWT 토큰을 발급하는 로직을 작성했다.
