@@ -8,6 +8,10 @@
 사용자가 "카카오 로그인" 버튼을 클릭하면 새 창이 열리고,
 인증 완료 후 부모 창으로 결과를 전달하는 구조였다.
 
+![popup_1.png](../img/popup_1.png)
+---
+![popup_2.png](../img/popup_2.png)
+
 ```javascript
 const handleKakaoLogin = () => {
   setIsLoading(true);
@@ -24,7 +28,9 @@ const handleKakaoLogin = () => {
 
 사용자가 카카오 로그인 팝업 창을 **강제로 닫으면** `isLoading` 상태가 `true`로 고정되어
 **"로그인 진행 중입니다..."** 메시지가 계속 표시되었다.
-
+---
+![popup_3.png](../img/popup_3.png)
+---
 ```javascript
 // 문제가 있었던 초기 코드
 const handleKakaoLogin = () => {
@@ -97,6 +103,9 @@ useEffect(() => {
   };
 }, []);
 ```
+---
+
+![popup_4.png](../img/popup_4.png)
 
 ---
 
